@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#04070f">
+<meta name="description" content="一则深夜视觉小说短篇：你与「大肥鱼」的三档形态，在凌晨三点的对话框里相遇。">
+<title>凌晨三点，蓝色大肥鱼</title>
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23081020'/%3E%3Cpath d='M13 36c6-9 16-13 26-12 6 .6 11 3 14 7l7-6c-1 6-3 9-6 11 2 2 4 3 6 3-5 6-13 9-22 8-10-1-19-5-25-11z' fill='%23cfe0ff'/%3E%3Ccircle cx='43' cy='31' r='2.2' fill='%230b1526'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="src/css/style.css">
+</head>
+<body>
+<div class="app" id="app" data-screen="title">
+
+  <canvas class="plankton" id="plankton" aria-hidden="true"></canvas>
+  <div class="glow-bleed" aria-hidden="true"></div>
+
+  <!-- ============ 舞台 ============ -->
+  <div class="stage" id="stage">
+    <div class="lightpool" aria-hidden="true"></div>
+    <div class="waterline" aria-hidden="true"></div>
+    <div class="cast" id="cast">
+      <img class="sprite" data-form="tall"  src="assets/char-tall.webp"  alt="大肥鱼 · 深海形态" draggable="false">
+      <img class="sprite" data-form="mid"   src="assets/char-mid.webp"   alt="大肥鱼 · 潮间形态" draggable="false">
+      <img class="sprite" data-form="chibi" src="assets/char-chibi.webp" alt="大肥鱼 · 浅水形态" draggable="false">
+    </div>
+  </div>
+
+  <!-- ============ HUD ============ -->
+  <header class="hud" id="hud" hidden>
+    <div class="hud-left">
+      <div class="chip" id="chip">
+        <i class="chip-dot"></i>
+        <span class="chip-name" id="chipName">深海</span>
+        <span class="chip-tier" id="chipTier">深潜档</span>
+      </div>
+      <p class="chapter" id="chapter">序 · 潮水漫上来</p>
+    </div>
+    <div class="hud-right">
+      <p class="rice" id="rice" title="本鲸吃掉的 token，换算成一碗碗白饭">
+        <span class="rice-k">白饭</span>
+        <span class="rice-v" id="riceVal">0.0</span>
+        <span class="rice-k">碗</span>
+      </p>
+      <button class="icon" id="btnLog" type="button" title="回看记录">记录</button>
+      <button class="icon" id="btnSound" type="button" title="声音开关" aria-pressed="true">音</button>
+      <button class="icon" id="btnAbout" type="button" title="关于大肥鱼">关于</button>
+    </div>
+  </header>
+
+  <!-- ============ 对话框 ============ -->
+  <section class="dialogue" id="dialogue" hidden aria-live="polite">
+    <div class="dbox">
+      <div class="nameplate" id="nameplate">
+        <span class="name" id="speaker">深海</span>
+        <span class="tier" id="speakerTier">深潜档</span>
+      </div>
+      <p class="line" id="line"></p>
+      <p class="tap" id="hint">轻点 / 空格　继续</p>
+    </div>
+    <div class="choices" id="choices" hidden>
+      <p class="choices-prompt" id="choicesPrompt"></p>
+      <div class="choices-list" id="choicesList"></div>
+    </div>
+  </section>
+
+  <!-- ============ 标题屏 ============ -->
+  <section class="screen title-screen" id="titleScreen">
+    <div class="veil" aria-hidden="true"></div>
+    <div class="title-inner">
+      <p class="kicker">VISUAL NOVEL　·　深夜短篇　·　一段</p>
+      <h1 class="title">
+        <span class="t1">凌晨三点，</span>
+        <span class="t2">蓝色大肥鱼</span>
+      </h1>
+      <p class="subtitle">三档形态，与一句「在吗」</p>
+      <div class="hairline"><i></i><b>本鲸记下了</b><i></i></div>
+      <button class="start" id="btnStart" type="button">开 始</button>
+      <p class="foot">角色形象源自网络二创「鲸鱼娘 / 大肥鱼」　·　非官方同人</p>
+    </div>
+  </section>
+
+  <!-- ============ 结束屏 ============ -->
+  <section class="screen end-screen" id="endScreen" hidden>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="end-inner">
+      <p class="kicker">END</p>
+      <h2 class="end-title" id="endTitle">本鲸记下了。</h2>
+      <p class="end-sub" id="endSub">大肥鱼 · 三档形态</p>
+      <p class="end-note" id="endNote"></p>
+      <div class="end-stats">
+        <div class="stat"><span class="stat-v" id="statRice">0.0</span><span class="stat-k">碗白饭</span></div>
+        <div class="stat"><span class="stat-v" id="statLines">0</span><span class="stat-k">句对话</span></div>
+        <div class="stat"><span class="stat-v" id="statForms">3</span><span class="stat-k">种形态</span></div>
+      </div>
+      <div class="end-actions">
+        <button class="btn" id="btnAgain" type="button">再来一次</button>
+        <button class="btn ghost" id="btnAbout2" type="button">关于大肥鱼</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 弹层 ============ -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h2 id="modalTitle">标题</h2>
+        <button class="icon" id="modalClose" type="button" aria-label="关闭">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="src/js/story.js"></script>
+<script src="src/js/game.js"></script>
+</body>
+</html>
