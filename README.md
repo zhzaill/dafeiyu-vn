@@ -5,6 +5,8 @@
 
 纯原生 HTML / CSS / JS，**零依赖、无构建**。
 
+**在线试玩**：<https://zhzaill.github.io/dafeiyu-vn/>
+
 ![游玩画面](docs/preview-play.png)
 
 ## 怎么打开
@@ -80,8 +82,8 @@ python -m http.server 8777 --bind 0.0.0.0
 
 **3）挂到公网**
 
-把 `dist/` 或整个项目拖进 Netlify Drop / Cloudflare Pages，或推到 GitHub 仓库后在 Settings → Pages 发布。
-国内访问 GitHub Pages、Netlify 可能偏慢；要稳定可放腾讯云 COS / 阿里云 OSS 的静态网站托管（绑自定义域名需备案）。
+本仓库已用 GitHub Pages 发布：<https://zhzaill.github.io/dafeiyu-vn/>（源码 `main` 分支根目录，无需构建）。
+换皮另发布可用 Netlify Drop / Cloudflare Pages；国内访问 GitHub Pages 可能偏慢，要稳定可放腾讯云 COS / 阿里云 OSS 的静态网站托管（绑自定义域名需备案）。
 
 **4）发压缩包**
 
